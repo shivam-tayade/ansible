@@ -1,0 +1,12 @@
+---
+# task and target playbook
+- hosts: nodes
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: INSTALL HTTPD ON CENT OS
+      yum:
+        name: httpd
+        state: present
+

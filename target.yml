@@ -1,0 +1,7 @@
+--- # my first testing yml playbook
+- hosts: nodes  
+  user: ansible
+  become: yes
+  connection: ssh
+  gather_facts: yes
+

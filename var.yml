@@ -1,0 +1,12 @@
+---
+# my variable playbook
+
+- hosts: nodes
+  user: ansible
+  become: yes
+  connection : ssh
+  vars:
+    pkgname: httpd
+  tasks:
+    - name: install HTTPD SERVER ON CENTOS 7
+      action: yum name='{{pkgname}}' state=present
