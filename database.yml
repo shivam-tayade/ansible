@@ -1,0 +1,34 @@
+---
+# Install and configure MariaDB on Amazon Linux 2023
+- name: Install and configure database
+  hosts: nodes
+  user: ansible
+  become: yes
+  tasks:
+    - name: Add MariaDB repository using official setup script
+      shell: |
+        curl -sS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash -s -- --mariadb-server-version="10.11"
+      args:
+        creates: /etc/yum.repos.d/mariadb.repo
+
+    - name: Install MariaDB 10.11 packages
+      dnf:
+        name:
+          - MariaDB-server
+          - MariaDB-client
+        state: present
+        update_cache: yes
+
+    - name: Start and enable MariaDB service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Set root password
+      mysql_user:
+        name: root
+        password: securepassword
+        login_unix_socket: /var/lib/mysql/mysql.sock
+        state: present
+
